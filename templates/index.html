@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block sumon %}
+<h1>Event Registration</h1>
+<section class="hero is-info">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <div class="columns">
+                        <div class="column is-one-fifth">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1024px-Python-logo-notext.svg.png"
+                                 style="height: 70px"
+                                 alt="">
+
+                        </div>
+                        <div class="column">
+                            <h1 class="title">
+                                পাইকন রাজশাহী ২০১৯
+                            </h1>
+                            <h2 class="subtitle">
+                                <span>বাংলাদেশের  বৃহত্তম পাইথন ডেভেলপার ইফতার পার্টি  •  জুন 3, ২০১৯</span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="column" style="text-align: center">
+                  {% if not ticket %}  <a class="button is-success is-large" href="#registration">রেজিস্ট্রেশন করুন</a>{% endif %}
+                    {% if ticket %}  <a class="button is-success is-large" href="#registration">আপনি রেজিস্ট্রেশন করেছেন </a>{% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-white">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-half py-center feature">
+                    <i style="font-size: 500%" class="fas has-text-success fa-comment-alt"></i>
+                </div>
+                <div class="column py-center">
+                     <div class="has-text-right">
+                         <h1 class="title">বাংলাদেশের সেরা প্রোগ্রামারদের আড্ডা!</h1>
+                         <p> পাইকনে  থাকছেন পুরনো পরিচিত মুখগুলোর পাশাপাশি নতুন  ট্যালেন্ট ও আমাদের কমিউনিটির ভবিষ্যৎ।
+                             পাইথন জগতের নতুন সব খোঁজখবর নিতে ক্যালেন্ডার মার্ক করে রাখুন! পাইথন জগতের নতুন সব খোঁজখবর নিতে ক্যালেন্ডার মার্ক করে রাখুন!</p>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-light">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column py-center">
+                     <div class="has-text-right">
+                         <h1 class="title"> রাজশাহী  প্রাণকেন্দ্রে  পাইথনপ্রেমীদের সমাবেশ!</h1>
+                         <p> পাইকনে  থাকছেন পুরনো পরিচিত মুখগুলোর পাশাপাশি নতুন  ট্যালেন্ট ও আমাদের কমিউনিটির ভবিষ্যৎ।
+                             পাইথন জগতের নতুন সব খোঁজখবর নিতে ক্যালেন্ডার মার্ক করে রাখুন! পাইথন জগতের নতুন সব খোঁজখবর নিতে ক্যালেন্ডার মার্ক করে রাখুন!</p>
+                     </div>
+                </div>
+                <div class="column is-half py-center feature">
+                    <i style="font-size: 500%" class="fas has-text-success fa-map-marker-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<a name="registration"></a>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column py-center" style="min-height: 220px;">
+                <i style="font-size: 500%" class="fas has-text-success fa-comment-alt"></i>
+                <i style="font-size: 500%" class="fas has-text-info fa-map-marker-alt"></i>
+                <i style="font-size: 500%" class="fas has-text-primary fa-microphone"></i>
+            </div>
+            <div class="column">
+                {% if not ticket %}
+                <div class="notification is-danger">
+                    অনুগ্রহ করে ফর্মটি সঠিক ভাবে পূরণ করুন।
+                </div>
+                {% endif %}
+                {% if ticket %}
+                <div class="notification is-success">
+                    আপনার রেজিস্ট্রেশন সফল হয়েছে
+                </div>
+                {% include 'card.html' %}
+                {% endif %}
+                {% if not ticket %}
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="field">
+                        <label class="label"> নাম</label>
+                        <div class="control">
+<!--
+                            <input class="input" name="name" type="text" placeholder="আপনার পূর্ণ নাম" value="{{request.POST.name}}">
+-->
+                            {{form.name}}
+                        </div>
+                        {% if form.name.errors %}
+                        {% for error in form.name.errors %}
+                        <p class="help is-danger"> {{ error|escape }}</p>
+                       {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="field">
+                        <label class="label">ইমেইল </label>
+                        <div class="control has-icons-left has-icons-right">
+<!--
+                            <input class="input is-danger" name="email" type="email" placeholder="ইমেইল ঠিকানা" value="{{request.POST.email}}">
+-->
+                            {{form.email}}
+                            <span class="icon is-small is-left"><i class="fas fa-envelope"></i></span>
+                            <span class="icon is-small is-right"><i class="fas fa-exclamation-triangle"></i></span>
+                        </div>
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                        <p class="help is-danger"> {{ error|escape }}</p>
+                    {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="field">
+                        <label class="label">মোবাইল নম্বর</label>
+                        <div class="control has-icons-left has-icons-right">
+<!--
+                            <input type="text" name="phone" class="input {% if error.phone %}{% endif %}" placeholder="মোবাইল ফোন নম্বর" value="{{request.POST.phone}}">
+-->
+                            {{form.phone}}
+                            <span class="icon is-small is-left"><i class="fas fa-phone"></i></span>
+                        </div>
+                    {% if form.phone.errors %}
+                        {% for error in form.phone.errors %}
+                        <p class="help is-danger"> {{ error|escape }}</p>
+                    {% endfor %}
+                        {% endif %}</div>
+
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" name="agreed">
+                                আমি সকল নিয়ম কানুন ও শর্তাবলী মেনে নিচ্ছি।
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-link"> ঠিক আছে</button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-danger"> বাতিল</button>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            টেক মাস্টার্সের <a href="https://techmasterslive.com/course/django-webapp">জ্যাঙ্গো ওয়েব অ্যাপ্লিকেশন
+            ডেভেলপমেন্ট</a> কোর্সের অংশ হিসেবে তৈরি!
+        </p>
+    </div>
+</footer>
+
+{% endblock  %}
